@@ -5,16 +5,14 @@
 		>
 			<div class="w-fit my-0 mx-auto">
 				<div
-					class="grid grid-cols-3 grid-rows-3 min-h-0 min-w-0 w-[822px] h-[822px] m-10 translate-x-0 translate-y-0 gap-px bg-black border border-solid border-black"
+					class="grid grid-cols-3 grid-rows-3 min-h-0 min-w-0 w-[822px] h-[822px] m-10 translate-x-0 translate-y-0 gap-px border border-solid border-black"
 				>
 					<nine-times-nine
-						v-for="(gridColor, idx) in gridColors"
-						:key="idx"
-						:bgMain="gridColor.main"
-						:bgSecond="gridColor.second"
-						:gridProject="gridProject"
-						>{{ key }}</nine-times-nine
-					>
+						v-for="(grid, index) in grids"
+						:key="index"
+						:grid="grid"
+						@update-grid="updateGrid"
+					/>
 				</div>
 			</div>
 		</div>
@@ -22,82 +20,178 @@
 </template>
 
 <script>
-import { ref, onMounted } from 'vue';
+import { ref } from 'vue';
 import nineTimesNine from './components/nineTimesNine.vue';
 
 export default {
 	components: { nineTimesNine },
 	setup() {
-		const gridColors = ref([
-			{ id: 1, main: 'rgb(118,163,158)', second: 'rgb(179,204,201)' },
-			{ id: 2, main: 'rgb(255,132,132)', second: 'rgb(255,234,234)' },
-			{ id: 3, main: 'rgb(255,228,135)', second: 'rgb(255,251,237)' },
-			{ id: 4, main: 'rgb(155,192,222)', second: 'rgb(231,240,247)' },
-			{ id: 5, main: 'rgb(204,204,204)', second: 'rgb(255,255,255)' },
-			{ id: 6, main: 'rgb(188,172,156)', second: 'rgb(229,223,217)' },
-			{ id: 7, main: 'rgb(221,196,161)', second: 'rgb(248,243,236)' },
-			{ id: 8, main: 'rgb(153,171,158)', second: 'rgb(209,217,211)' },
-			{ id: 9, main: 'rgb(169,155,196)', second: 'rgb(224,219,234)' },
-		]);
-
-		const gridProject = ref([
+		// 將 grids 設為 reactive state
+		const grids = ref([
 			{
 				id: 1,
-				main: '1',
-				project: ['1', '2', '3', '4', '5', '6', '7', '8'],
+				bgMain: 'rgb(118,163,158)',
+				bgSecond: 'rgb(179,204,201)',
+				title: '內容1',
+				content: [
+					'內容1-1',
+					'內容1-2',
+					'內容1-3',
+					'內容1-4',
+					'內容1-5',
+					'內容1-6',
+					'內容1-7',
+					'內容1-8',
+				],
 			},
 			{
 				id: 2,
-				main: '2',
-				project: ['1', '2', '3', '4', '5', '6', '7', '8'],
+				bgMain: 'rgb(255,132,132)',
+				bgSecond: 'rgb(255,234,234)',
+				title: '內容2',
+				content: [
+					'內容2-1',
+					'內容2-2',
+					'內容2-3',
+					'內容2-4',
+					'內容2-5',
+					'內容2-6',
+					'內容2-7',
+					'內容2-8',
+				],
 			},
 			{
 				id: 3,
-				main: '3',
-				project: ['1', '2', '3', '4', '5', '6', '7', '8'],
+				bgMain: 'rgb(255,228,135)',
+				bgSecond: 'rgb(255,251,237)',
+				title: '內容3',
+				content: [
+					'內容3-1',
+					'內容3-2',
+					'內容3-3',
+					'內容3-4',
+					'內容3-5',
+					'內容3-6',
+					'內容3-7',
+					'內容3-8',
+				],
 			},
 			{
 				id: 4,
-				main: '4',
-				project: ['1', '2', '3', '4', '5', '6', '7', '8'],
+				bgMain: 'rgb(155,192,222)',
+				bgSecond: 'rgb(231,240,247)',
+				title: '內容4',
+				content: [
+					'內容4-1',
+					'內容4-2',
+					'內容4-3',
+					'內容4-4',
+					'內容4-5',
+					'內容4-6',
+					'內容4-7',
+					'內容4-8',
+				],
 			},
 			{
 				id: 5,
-				main: '5',
-				project: ['1', '2', '3', '4', '5', '6', '7', '8'],
+				bgMain: 'rgb(204,204,204)',
+				bgSecond: 'rgb(255,255,255)',
+				title: ref('內容5'),
+				content: [
+					'內容1',
+					'內容2',
+					'內容3',
+					'內容4',
+					'內容5',
+					'內容6',
+					'內容7',
+					'內容8',
+				],
 			},
 			{
 				id: 6,
-				main: '6',
-				project: ['1', '2', '3', '4', '5', '6', '7', '8'],
+				bgMain: 'rgb(188,172,156)',
+				bgSecond: 'rgb(229,223,217)',
+				title: '內容6',
+				content: [
+					'內容6-1',
+					'內容6-2',
+					'內容6-3',
+					'內容6-4',
+					'內容6-5',
+					'內容6-6',
+					'內容6-7',
+					'內容6-8',
+				],
 			},
 			{
 				id: 7,
-				main: '7',
-				project: ['1', '2', '3', '4', '5', '6', '7', '8'],
+				bgMain: 'rgb(221,196,161)',
+				bgSecond: 'rgb(248,243,236)',
+				title: '內容7',
+				content: [
+					'內容7-1',
+					'內容7-2',
+					'內容7-3',
+					'內容7-4',
+					'內容7-5',
+					'內容7-6',
+					'內容7-7',
+					'內容7-8',
+				],
 			},
 			{
 				id: 8,
-				main: '8',
-				project: ['1', '2', '3', '4', '5', '6', '7', '8'],
+				bgMain: 'rgb(153,171,158)',
+				bgSecond: 'rgb(209,217,211)',
+				title: '內容8',
+				content: [
+					'內容8-1',
+					'內容8-2',
+					'內容8-3',
+					'內容8-4',
+					'內容8-5',
+					'內容8-6',
+					'內容8-7',
+					'內容8-8',
+				],
 			},
 			{
 				id: 9,
-				main: '9',
-				project: ['1', '2', '3', '4', '5', '6', '7', '8'],
+				bgMain: 'rgb(169,155,196)',
+				bgSecond: 'rgb(224,219,234)',
+				title: '內容9',
+				content: [
+					'內容9-1',
+					'內容9-2',
+					'內容9-3',
+					'內容9-4',
+					'內容9-5',
+					'內容9-6',
+					'內容9-7',
+					'內容9-8',
+				],
 			},
 		]);
 
-		function updateItem(id, newValue) {
-			const item = gridItems.value.find(item => item.id === id);
-			if (item) {
-				item.main = newValue;
+		// 更新網格內容
+		const updateGrid = index => {
+			// 更新 id 5 的 title 時，連動更新其他 grid 的 title
+			if (index === 4) {
+				const updatedTitle = grids.value[4].title; // 取 id 5 的 title
+				grids.value.forEach((grid, i) => {
+					// 除了 id 5 外，更新所有其他 grid 的 title
+					if (i !== 4) {
+						grid.title = updatedTitle;
+					}
+				});
 			}
-		}
+			grids.value[index].content = '已更新';
+		};
 
 		return {
-			gridColors,
-			gridProject,
+			grids,
+			updateGrid,
 		};
 	},
 };
