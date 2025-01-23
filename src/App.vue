@@ -20,14 +20,13 @@
 </template>
 
 <script>
-import { ref } from 'vue';
+import { reactive, ref } from 'vue';
 import nineTimesNine from './components/nineTimesNine.vue';
 
 export default {
 	components: { nineTimesNine },
 	setup() {
-		// 將 grids 設為 reactive state
-		const grids = ref([
+
 			{
 				id: 1,
 				bgMain: 'rgb(118,163,158)',
@@ -174,19 +173,274 @@ export default {
 			},
 		]);
 
-		// 更新網格內容
+		const core = reactive({
+			main: {
+				title: 'Start Here!',
+				bgMain: 'rgb(204,204,204)',
+				bgSecond: 'rgb(255,255,255)',
+			},
+			subs: [
+				{
+					title: 'Sub Goal 1',
+					bgMain: 'rgb(118,163,158)',
+					bgSecond: 'rgb(179,204,201)',
+					actions: [
+						{
+							title: '',
+						},
+						{
+							title: '',
+						},
+						{
+							title: '',
+						},
+						{
+							title: '',
+						},
+						{
+							title: '',
+						},
+						{
+							title: '',
+						},
+						{
+							title: '',
+						},
+						{
+							title: '',
+						},
+					],
+				},
+				{
+					title: 'Sub Goal 2',
+					bgMain: 'rgb(255,132,132)',
+					bgSecond: 'rgb(255,234,234)',
+					actions: [
+						{
+							title: '',
+						},
+						{
+							title: '',
+						},
+						{
+							title: '',
+						},
+						{
+							title: '',
+						},
+						{
+							title: '',
+						},
+						{
+							title: '',
+						},
+						{
+							title: '',
+						},
+						{
+							title: '',
+						},
+					],
+				},
+				{
+					title: 'Sub Goal 3',
+					bgMain: 'rgb(255,228,135)',
+					bgSecond: 'rgb(255,251,237)',
+					actions: [
+						{
+							title: '',
+						},
+						{
+							title: '',
+						},
+						{
+							title: '',
+						},
+						{
+							title: '',
+						},
+						{
+							title: '',
+						},
+						{
+							title: '',
+						},
+						{
+							title: '',
+						},
+						{
+							title: '',
+						},
+					],
+				},
+				{
+					title: 'Sub Goal 4',
+					bgMain: 'rgb(155,192,222)',
+					bgSecond: 'rgb(231,240,247)',
+					actions: [
+						{
+							title: '',
+						},
+						{
+							title: '',
+						},
+						{
+							title: '',
+						},
+						{
+							title: '',
+						},
+						{
+							title: '',
+						},
+						{
+							title: '',
+						},
+						{
+							title: '',
+						},
+						{
+							title: '',
+						},
+					],
+				},
+				{
+					title: 'Sub Goal 5',
+					bgMain: 'rgb(188,172,156)',
+					bgSecond: 'rgb(229,223,217)',
+					actions: [
+						{
+							title: '',
+						},
+						{
+							title: '',
+						},
+						{
+							title: '',
+						},
+						{
+							title: '',
+						},
+						{
+							title: '',
+						},
+						{
+							title: '',
+						},
+						{
+							title: '',
+						},
+						{
+							title: '',
+						},
+					],
+				},
+				{
+					title: 'Sub Goal 6',
+					bgMain: 'rgb(221,196,161)',
+					bgSecond: 'rgb(248,243,236)',
+					actions: [
+						{
+							title: '',
+						},
+						{
+							title: '',
+						},
+						{
+							title: '',
+						},
+						{
+							title: '',
+						},
+						{
+							title: '',
+						},
+						{
+							title: '',
+						},
+						{
+							title: '',
+						},
+						{
+							title: '',
+						},
+					],
+				},
+				{
+					title: 'Sub Goal 7',
+					bgMain: 'rgb(153,171,158)',
+					bgSecond: 'rgb(209,217,211)',
+					actions: [
+						{
+							title: '',
+						},
+						{
+							title: '',
+						},
+						{
+							title: '',
+						},
+						{
+							title: '',
+						},
+						{
+							title: '',
+						},
+						{
+							title: '',
+						},
+						{
+							title: '',
+						},
+						{
+							title: '',
+						},
+					],
+				},
+				{
+					title: 'Sub Goal 8',
+					bgMain: 'rgb(169,155,196)',
+					bgSecond: 'rgb(224,219,234)',
+					actions: [
+						{
+							title: '',
+						},
+						{
+							title: '',
+						},
+						{
+							title: '',
+						},
+						{
+							title: '',
+						},
+						{
+							title: '',
+						},
+						{
+							title: '',
+						},
+						{
+							title: '',
+						},
+						{
+							title: '',
+						},
+					],
+				},
+			],
+		});
+
 		const updateGrid = index => {
-			// 更新 id 5 的 title 時，連動更新其他 grid 的 title
 			if (index === 4) {
-				const updatedTitle = grids.value[4].title; // 取 id 5 的 title
+				const updatedTitle = grids.value[4].title.value;
 				grids.value.forEach((grid, i) => {
-					// 除了 id 5 外，更新所有其他 grid 的 title
 					if (i !== 4) {
 						grid.title = updatedTitle;
 					}
 				});
 			}
-			grids.value[index].content = '已更新';
+			grids.value[index].content = ['已更新'];
 		};
 
 		return {
