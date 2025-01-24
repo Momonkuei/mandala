@@ -10,7 +10,12 @@
 				<div
 					class="w-full h-full flex justify-center items-center cursor-pointer break-all"
 				>
-					{{ content }}
+					<textarea
+						ref="textareaRef"
+						class="w-full h-full resize-none bg-transparent text-center border-none outline-none table-cell align-middle"
+						v-model="localContent"
+						@input="updateContent"
+					></textarea>
 				</div>
 			</div>
 		</div>
@@ -18,8 +23,43 @@
 </template>
 
 <script>
+import { ref, watch, onMounted } from 'vue';
 export default {
 	props: ['bgColor', 'content'],
-	setup(props) {},
+	emits: ['update:content'],
+	setup(props, { emit }) {
+		// Local copy of content
+		const localContent = ref(props.content);
+
+		// Reference for the textarea
+		const textareaRef = ref(null);
+
+		// Watch for prop updates (optional, if parent changes content dynamically)
+		watch(
+			() => props.content,
+			newContent => {
+				localContent.value = newContent;
+			}
+		);
+
+		// Emit the updated content to the parent
+		const updateContent = () => {
+			emit('update:content', localContent.value);
+		};
+
+		// Get the height of textarea after mounting
+		onMounted(() => {
+			if (textareaRef.value) {
+				const textareaHeight = textareaRef.value.offsetHeight;
+				console.log('Textarea height:', textareaHeight);
+			}
+		});
+
+		return {
+			localContent,
+			updateContent,
+			textareaRef,
+		};
+	},
 };
 </script>
