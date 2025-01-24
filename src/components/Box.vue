@@ -10,7 +10,7 @@
 				<div
 					class="w-full h-full flex justify-center items-center cursor-pointer break-all"
 				>
-					12345678910
+					{{ content }}
 				</div>
 			</div>
 		</div>
@@ -19,7 +19,7 @@
 
 <script>
 export default {
-	props: ['bgColor'],
-	setup() {},
+	props: ['bgColor', 'content'],
+	setup(props) {},
 };
 </script>

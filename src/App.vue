@@ -7,7 +7,7 @@
 				<div
 					class="grid grid-cols-3 grid-rows-3 min-h-0 min-w-0 w-[822px] h-[822px] m-10 translate-x-0 translate-y-0 gap-px border border-solid border-black"
 				>
-					<nine-times-nine-conrainer />
+					<nine-times-nine-conrainer :data="data" />
 				</div>
 			</div>
 		</div>
@@ -21,7 +21,7 @@ import nineTimesNineConrainer from './components/nineTimesNineConrainer.vue';
 export default {
 	components: { nineTimesNineConrainer },
 	setup() {
-		const core = reactive({
+		const data = reactive({
 			main: {
 				title: 'Start Here!',
 				bgMain: 'rgb(204,204,204)',
@@ -34,28 +34,28 @@ export default {
 					bgSecond: 'rgb(179,204,201)',
 					actions: [
 						{
-							title: '',
+							title: '123',
 						},
 						{
-							title: '',
+							title: '456',
 						},
 						{
-							title: '',
+							title: '789',
 						},
 						{
-							title: '',
+							title: '123',
 						},
 						{
-							title: '',
+							title: '456',
 						},
 						{
-							title: '',
+							title: '789',
 						},
 						{
-							title: '',
+							title: '123',
 						},
 						{
-							title: '',
+							title: '456',
 						},
 					],
 				},
@@ -279,7 +279,9 @@ export default {
 			],
 		});
 
-		return {};
+		return {
+			data,
+		};
 	},
 };
 </script>
